@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Step 7: カスタムビジュアライゼーション</title>
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.114/Build/Cesium/Cesium.js"></script>
+    <link
+      href="https://cesium.com/downloads/cesiumjs/releases/1.114/Build/Cesium/Widgets/widgets.css"
+      rel="stylesheet"
+    />
+    <style>
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MzRiZWEyOC0yNmI4LTQxZWItOGExOS1jMDc0YjhlZGIyZWMiLCJpZCI6MzAwOTEwLCJpYXQiOjE3NDY3NzI3Nzh9.8zbLJ7pQ1zWI9qzkTdimTz48CGb4gOOfNc3V28CgbtY";
+
+      const viewer = new Cesium.Viewer("cesiumContainer");
+
+      async function loadTileset() {
+        try {
+          // 非同期でタイルセットを読み込み
+          const tileset = await Cesium.Cesium3DTileset.fromUrl(
+            "../data/sample-tileset/tileset.json"
+          );
+
+          // カスタムシェーダーの設定（readyPromise解決後）
+          await tileset.readyPromise;
+          tileset.customShader = new Cesium.CustomShader({
+            fragmentShaderText: `
+              void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material) {
+                material.diffuse *= vec3(1.0, 0.0, 0.0);
+              }
+            `,
+          });
+
+          viewer.scene.primitives.add(tileset);
+          viewer.zoomTo(tileset);
+        } catch (error) {
+          console.error("エラーが発生しました:", error);
+          viewer.entities.add({
+            position: Cesium.Cartesian3.fromDegrees(139.767, 35.681),
+            label: {
+              text: "タイルセットの読み込みに失敗しました",
+              font: "20px sans-serif",
+              fillColor: Cesium.Color.RED,
+            },
+          });
+        }
+      }
+
+      loadTileset();
+    </script>
+  </body>
+</html>

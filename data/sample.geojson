@@ -1,0 +1,16 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "東京都庁",
+        "description": "Tokyo Metropolitan Government Building"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.692, 35.6895]
+      }
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+<!-- tutorials/02_camera-controls.html -->
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Step 2: カメラ操作</title>
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.114/Build/Cesium/Cesium.js"></script>
+    <link
+      href="https://cesium.com/downloads/cesiumjs/releases/1.114/Build/Cesium/Widgets/widgets.css"
+      rel="stylesheet"
+    />
+    <style>
+      html,
+      body,
+      #cesiumContainer {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cesiumContainer"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MzRiZWEyOC0yNmI4LTQxZWItOGExOS1jMDc0YjhlZGIyZWMiLCJpZCI6MzAwOTEwLCJpYXQiOjE3NDY3NzI3Nzh9.8zbLJ7pQ1zWI9qzkTdimTz48CGb4gOOfNc3V28CgbtY";
+
+      const viewer = new Cesium.Viewer("cesiumContainer");
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(139.767, 35.681, 1500.0),
+        orientation: {
+          heading: Cesium.Math.toRadians(0.0),
+          pitch: Cesium.Math.toRadians(-30.0),
+          roll: 0.0,
+        },
+      });
+    </script>
+  </body>
+</html>
